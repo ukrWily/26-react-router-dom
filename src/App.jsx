@@ -18,7 +18,7 @@ function App() {
             <Route path="about" element={<About />}></Route>
             <Route path="contacts" element={<Contacts />}></Route>
             <Route path="courses" element={<Courses />}></Route>
-            <Route path="courses/:slug" element={<SingleCourse />}></Route>
+            <Route path="courses/:courseSlug" element={<SingleCourse />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Route>
         </Routes>
