@@ -3,8 +3,13 @@ import queryString from "query-string";
 import courses from "../data/courses";
 import { useState } from "react";
 //
+const SORT_KEYS = ["title", "slug", "id"];
+//
 function sortCourses(courses, key) {
   const sortedCourses = [...courses];
+  if (!key || !SORT_KEYS.includes(key)) {
+    return sortedCourses;
+  }
   sortedCourses.sort((a, b) => (a[key] > b[key] ? 1 : -1));
   return sortedCourses;
 }
@@ -21,7 +26,7 @@ function Courses() {
 
   return (
     <>
-      <h1>Courses</h1>
+      <h1>{sortKey ? `Courses sorted by ${sortKey}` : "Courses"}</h1>
       {sortedCourses.map((course) => (
         <div key={course.id}>
           <Link to={course.slug} className="courseLink">
