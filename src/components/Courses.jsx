@@ -1,7 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import courses from "../data/courses";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //
 const SORT_KEYS = ["title", "slug", "id"];
 //
@@ -17,13 +17,22 @@ function sortCourses(courses, key) {
 function Courses() {
   const location = useLocation();
   const query = queryString.parse(location.search);
+  const navigate = useNavigate();
   const [sortKey, setSortKey] = useState(query.sort);
 
   const [sortedCourses, setSortedCourses] = useState(
     sortCourses(courses, sortKey)
   );
   //
-
+  // if query hasn't keys -> to page courses
+  useEffect(() => {
+    if (!SORT_KEYS.includes(sortKey)) {
+      navigate(".");
+      setSortKey();
+      setSortedCourses([...courses]);
+    }
+  }, [sortKey, navigate]);
+  //
   return (
     <>
       <h1>{sortKey ? `Courses sorted by ${sortKey}` : "Courses"}</h1>
